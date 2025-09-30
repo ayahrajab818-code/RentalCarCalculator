@@ -17,32 +17,40 @@ public class Main {
 
 
         //Values need from user
-        System.out.printf("When do you want the car? ");
+        System.out.print("When do you want the car? ");
         String pickUpDate = scanner.nextLine();
 
-        System.out.printf("How many days do you want it? ");
+        System.out.print("How many days do you want it? ");
         int numberOfDays = scanner.nextInt();
+        scanner.nextLine();
 
-        System.out.printf("Do you want a toll tag (y/n) ");
+        System.out.print("Do you want a toll tag (y/n)? ");
         boolean optionTollTag = scanner.nextLine().equalsIgnoreCase("y");
-        
 
-        System.out.printf("Do you want a GPS (y/n) ");
+
+        System.out.print("Do you want a GPS (y/n)? ");
         boolean optionGPS = scanner.nextLine().equalsIgnoreCase("y");
 
-        System.out.printf("Do you want a Road Ide Assistance (y/n) ");
+        System.out.print("Do you want a Road Ide Assistance (y/n) ");
         boolean optionRoadIdeAssistance = scanner.nextLine().equalsIgnoreCase("y");
 
-        System.out.printf("Whats your age? ");
+        System.out.print("Whats your age? ");
         int age = scanner.nextInt();
         scanner.nextLine();
 
 
         //Calculation
-        double basicCarRenalAmount = 0;
-        double optionsAmount = 0;
+        double basicCarRenalAmount = numberOfDays * priceOfBasicRentalPerDay;
+        double optionPerDayCumulative =(optionTollTag) ? priceOfOptionTollTag : 0;
+        optionPerDayCumulative += (optionGPS) ? priceOfOptionGPS: 0;
+        optionPerDayCumulative += (optionRoadIdeAssistance) ? priceOfOptionRoadIdeAssistance : 0;
+        double optionsAmount = optionPerDayCumulative * numberOfDays;
         double underageSurchange = 0;
-        double totalCost = 0;
+
+        if (age < userAgeList){
+            underageSurchange = basicCarRenalAmount * precentOfUnderageDriverSurcharge;
+        }
+        double totalCost = basicCarRenalAmount + optionsAmount + underageSurchange;
 
 
         //Result
